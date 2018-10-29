@@ -1,6 +1,7 @@
 package com.example.charlie.hackumassproject;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,13 +19,16 @@ public class Game extends AppCompatActivity {
     int score = 0;
     public double delay = 1000;
     int MIN_DELAY = 200;
+    MediaPlayer mediaPlayer;
     int topScore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+         mediaPlayer = MediaPlayer.create(this, R.raw.music);
         Button button1 = findViewById(R.id.radioButton);
         startTimer();
+        mediaPlayer.start();
         int s= getIntent().getIntExtra("Score",0);
         topScore = s;
         button1.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +56,7 @@ public class Game extends AppCompatActivity {
                 bar.incrementProgressBy(-1*(score/10)+-1);
                 if(bar.getProgress() == 0){
                     t.cancel();
+                    mediaPlayer.stop();
                     finish();
                     startActivity(new Intent(Game.this, EndScreen.class).putExtra("Score", score).putExtra("TopScore",topScore));
                 }
@@ -64,7 +69,7 @@ public class Game extends AppCompatActivity {
         final ProgressBar bar = findViewById(R.id.progressBar);
         bar.incrementProgressBy(7);
         if (delay > MIN_DELAY)
-        delay = delay*.96;
+        delay = delay*.94;
         }
     public void animateFade(Button circle){
         final Animation fadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out);

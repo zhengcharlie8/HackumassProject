@@ -3,6 +3,7 @@ package com.example.charlie.hackumassproject;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,14 +13,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-
+    MediaPlayer mediaPlayer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         RelativeLayout rlayout = (RelativeLayout) findViewById(R.id.mainlayout);
+        mediaPlayer = MediaPlayer.create(this, R.raw.login);
+        mediaPlayer.start();
         rlayout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                mediaPlayer.stop();
                 startActivity(new Intent(MainActivity.this, Game.class));
             }
         });
